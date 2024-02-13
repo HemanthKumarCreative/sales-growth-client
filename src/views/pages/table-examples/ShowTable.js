@@ -24,7 +24,7 @@ const ShowTableExample = ({ Table, tableName, caption }) => {
       <Card>
         <CardBody className="text-center">
           <FileText className="font-large-2 mb-1" />
-          <CardTitle tag="h5">{`Show ${tableName}`}</CardTitle>
+          <CardTitle tag="h5">{tableName}</CardTitle>
           <CardText>{caption}</CardText>
           <Button color="primary" onClick={() => setShow(true)}>
             Show

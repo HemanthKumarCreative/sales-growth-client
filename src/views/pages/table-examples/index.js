@@ -30,8 +30,27 @@ const TableExamples = () => {
         <Col md="4">
           <ShowTableExample
             Table={HotTableExample}
-            tableName="Hot Table"
+            tableName="Hot Table With Default Headers"
             caption="Simple table configured using hands on table"
+            rowsHead={true}
+            columnsHead={true}
+          />
+        </Col>
+        <Col md="4">
+          <ShowTableExample
+            Table={HotTableExample}
+            tableName="Hot Table With Custom Headers"
+            caption="Simple table configured using hands on table"
+            rowsHead={true}
+            columnsHead={[
+              "Id",
+              "Name",
+              "Class",
+              "Rank",
+              "Award",
+              "Height",
+              "Weight",
+            ]}
           />
         </Col>
         <Col md="4">
@@ -39,6 +58,8 @@ const TableExamples = () => {
             Table={HotTableExample}
             tableName="Hot Table"
             caption="Simple table configured using hands on table"
+            rowsHead={true}
+            columnsHead={true}
           />
         </Col>
         <Col md="4">
@@ -46,13 +67,8 @@ const TableExamples = () => {
             Table={HotTableExample}
             tableName="Hot Table"
             caption="Simple table configured using hands on table"
-          />
-        </Col>
-        <Col md="4">
-          <ShowTableExample
-            Table={HotTableExample}
-            tableName="Hot Table"
-            caption="Simple table configured using hands on table"
+            rowsHead={true}
+            columnsHead={true}
           />
         </Col>
       </Row>
