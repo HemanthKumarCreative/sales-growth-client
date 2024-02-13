@@ -320,6 +320,13 @@ export default [
         icon: <Square size={12} />,
         permissions: ['admin', 'editor'],
         navLink: '/pages/modal-examples'
+      },
+      {
+        id: 'table-examples',
+        title: 'Table Examples',
+        icon: <Square size={12} />,
+        permissions: ['admin', 'editor'],
+        navLink: '/pages/table-examples'
       }
     ]
   }

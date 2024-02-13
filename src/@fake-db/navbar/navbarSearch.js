@@ -996,6 +996,14 @@ export const searchArr = [
         target: 'appKanban',
         link: '/apps/kanban',
         title: 'Kanban'
+      },
+      {
+        id: 130,
+        target: 'tableExamples',
+        isBookmarked: false,
+        title: 'Table Examples',
+        icon: 'Square',
+        link: '/pages/table-examples'
       }
     ]
   },
