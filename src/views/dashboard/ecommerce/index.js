@@ -19,6 +19,8 @@ import OrdersBarChart from "@src/views/ui-elements/cards/statistics/OrdersBarCha
 import CardTransactions from "@src/views/ui-elements/cards/advance/CardTransactions";
 import ProfitLineChart from "@src/views/ui-elements/cards/statistics/ProfitLineChart";
 import CardBrowserStates from "@src/views/ui-elements/cards/advance/CardBrowserState";
+import ExpenseLineChart from "../../ui-elements/cards/statistics/ExpenseLineChart";
+import ExpenseBarChart from "../../ui-elements/cards/statistics/ExpenseBarChart";
 
 // ** Styles
 import "@styles/react/libs/charts/apex-charts.scss";
@@ -34,18 +36,18 @@ const EcommerceDashboard = () => {
   return (
     <div id="dashboard-ecommerce">
       <Row className="match-height">
-        <Col xl="8" md="6" xs="12">
+        <Col xl="9" lg="9" md="12" sm="12" xs="12">
           <StatsCard cols={{ md: "3", sm: "6", xs: "12" }} />
+        </Col>
+        <Col xl="3" lg="3" md="12" sm="12" xs="12">
+          <OrdersBarChart warning={colors.warning.main} />
         </Col>
       </Row>
       <Row className="match-height">
         <Col lg="4" md="12">
           <Row className="match-height">
-            <Col lg="6" md="3" xs="6">
-              <OrdersBarChart warning={colors.warning.main} />
-            </Col>
-            <Col lg="6" md="3" xs="6">
-              <ProfitLineChart info={colors.info.main} />
+            <Col lg="12" md="6" xs="12">
+              <ExpenseBarChart warning={colors.success.main} />
             </Col>
             <Col lg="12" md="6" xs="12">
               <Earnings success={colors.success.main} />
@@ -64,16 +66,31 @@ const EcommerceDashboard = () => {
           <CompanyTable />
         </Col>
         <Col lg="4" md="6" xs="12">
-          <CardMeetup />
+          <CardBrowserStates
+            colors={colors}
+            trackBgColor={trackBgColor}
+            heading="Most Sold Products"
+            caption="Counter August 2020"
+          />
         </Col>
         <Col lg="4" md="6" xs="12">
-          <CardBrowserStates colors={colors} trackBgColor={trackBgColor} />
-        </Col>
-        <Col lg="4" md="6" xs="12">
-          <GoalOverview success={colors.success.main} />
+          <CardBrowserStates
+            colors={colors}
+            trackBgColor={trackBgColor}
+            heading="Browser States"
+            caption="Counter August 2020"
+          />
         </Col>
         <Col lg="4" md="6" xs="12">
           <CardTransactions />
+        </Col>
+        <Col lg="4" md="6" xs="12">
+          <CardBrowserStates
+            colors={colors}
+            trackBgColor={trackBgColor}
+            heading="Least Sold Products"
+            caption="Counter August 2020"
+          />
         </Col>
       </Row>
     </div>

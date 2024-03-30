@@ -7,7 +7,7 @@ import axios from "axios";
 // ** Custom Components
 import TinyChartStats from "@components/widgets/stats/TinyChartStats";
 
-const ProfitLineChart = ({ info }) => {
+const ExpenseLineChart = ({ info }) => {
   // ** State
   const [data, setData] = useState(null);
 
@@ -31,17 +31,6 @@ const ProfitLineChart = ({ info }) => {
       borderColor: "#EBEBEB",
       strokeDashArray: 5,
       xaxis: {
-        categories: [
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun",
-          "Jul",
-          "Aug",
-          "Sep",
-        ],
         lines: {
           show: true,
         },
@@ -117,11 +106,11 @@ const ProfitLineChart = ({ info }) => {
       height={70}
       type="line"
       options={options}
-      title={data.title}
+      title={"Expense"}
       stats={data.statistics}
       series={data.series}
     />
   ) : null;
 };
 
-export default ProfitLineChart;
+export default ExpenseLineChart;

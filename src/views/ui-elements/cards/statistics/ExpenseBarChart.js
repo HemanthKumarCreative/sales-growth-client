@@ -98,7 +98,7 @@ const OrdersBarChart = ({ warning }) => {
       height={70}
       type="bar"
       options={options}
-      title={data.title}
+      title={"Expenses"}
       stats={data.statistics}
       series={data.series}
     />
