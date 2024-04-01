@@ -3,11 +3,50 @@ import Avatar from "@components/avatar";
 
 // ** Icons Imports
 import * as Icon from "react-feather";
-
+import { useEffect, useState } from "react";
+import { getTransactions } from "../../../../redux/salesGrowth";
 // ** Reactstrap Imports
 import { Card, CardHeader, CardTitle, CardBody } from "reactstrap";
+import { useDispatch, useSelector } from "react-redux";
 
 const CardTransactions = () => {
+  const dispatch = useDispatch();
+  const transactions = useSelector((state) => state.salesGrowth.transactions);
+  const [trans, setTrans] = useState([]);
+  const COLORS = [
+    "light-primary",
+    "light-success",
+    "light-danger",
+    "light-warning",
+    "light-info",
+  ];
+  const ICONS = ["Pocket", "Check", "DollarSign", "CreditCard", "TrendingUp"];
+  const formatTransactions = (transactions) => {
+    return transactions?.map((transaction, index) => {
+      const updatedTransaction = {
+        title: transaction.vendor,
+        color: COLORS[index],
+        subtitle: transaction.purpose,
+        amount:
+          transaction.type === "credit"
+            ? "+ " + "$" + transaction.amount
+            : "- " + "$" + transaction.amount,
+        Icon: Icon[ICONS[index]],
+        down: transaction.type === "credit" ? false : true,
+      };
+      return updatedTransaction;
+    });
+  };
+
+  useEffect(() => {
+    dispatch(getTransactions());
+  }, []);
+
+  useEffect(() => {
+    setTrans(formatTransactions(transactions?.slice(0, 5)));
+    console.log({ transactions });
+  }, [transactions]);
+
   const transactionsArr = [
     {
       title: "Wallet",
@@ -49,9 +88,9 @@ const CardTransactions = () => {
   ];
 
   const renderTransactions = () => {
-    return transactionsArr.map((item) => {
+    return trans?.map((item, index) => {
       return (
-        <div key={item.title} className="transaction-item">
+        <div key={index} className="transaction-item">
           <div className="d-flex">
             <Avatar
               className="rounded"

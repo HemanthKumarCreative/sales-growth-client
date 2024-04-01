@@ -23,10 +23,60 @@ const RevenueReport = (props) => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("/card/card-analytics/revenue-report")
-      .then((res) => setData(res.data));
-    return () => setData(null);
+    setData({
+      orders_bar_chart: {
+        title: "Orders",
+        statistics: "2,76k",
+        series: [
+          {
+            name: "2020",
+            data: [45, 85, 65, 45, 65],
+          },
+        ],
+      },
+      profit_line_chart: {
+        title: "Profit",
+        statistics: "6,24k",
+        series: [
+          {
+            data: [0, 20, 5, 30, 15, 45],
+          },
+        ],
+      },
+      subscribers_gained: {
+        series: [
+          {
+            name: "Subscribers",
+            data: [28, 40, 36, 52, 38, 60, 55],
+          },
+        ],
+        analyticsData: {
+          subscribers: 92600,
+        },
+      },
+      revenueGenerated: {
+        series: [
+          {
+            name: "Revenue",
+            data: [350, 275, 400, 300, 350, 300, 450],
+          },
+        ],
+        analyticsData: {
+          revenue: 97500,
+        },
+      },
+      quarterlySales: {
+        series: [
+          {
+            name: "Sales",
+            data: [10, 15, 7, 12, 3, 16],
+          },
+        ],
+        analyticsData: {
+          sales: "36%",
+        },
+      },
+    });
   }, []);
 
   const revenueOptions = {
@@ -104,32 +154,6 @@ const RevenueReport = (props) => {
         data: [-145, -80, -60, -180, -100, -60, -85, -75, -100],
       },
     ];
-
-  const budgetSeries = [
-      {
-        data: [61, 48, 69, 52, 60, 40, 79, 60, 59, 43, 62],
-      },
-      {
-        data: [20, 10, 30, 15, 23, 0, 25, 15, 20, 5, 27],
-      },
-    ],
-    budgetOptions = {
-      chart: {
-        toolbar: { show: false },
-        zoom: { enabled: false },
-        type: "line",
-        sparkline: { enabled: true },
-      },
-      stroke: {
-        curve: "smooth",
-        dashArray: [0, 5],
-        width: [2],
-      },
-      colors: [props.primary, "#dcdae3"],
-      tooltip: {
-        enabled: false,
-      },
-    };
 
   return data !== null ? (
     <Card className="card-revenue-budget">

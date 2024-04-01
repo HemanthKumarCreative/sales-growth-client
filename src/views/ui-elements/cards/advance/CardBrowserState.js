@@ -21,12 +21,93 @@ import safariIcon from "@src/assets/images/icons/apple-safari.png";
 import IEIcon from "@src/assets/images/icons/internet-explorer.png";
 import chromeIcon from "@src/assets/images/icons/google-chrome.png";
 import firefoxIcon from "@src/assets/images/icons/mozila-firefox.png";
+import starIcon from "@src/assets/images/icons/star.svg";
+import bookIcon from "@src/assets/images/icons/book.svg";
+import brushIcon from "@src/assets/images/icons/brush.svg";
+import rocketIcon from "@src/assets/images/icons/rocket.svg";
+import toolboxIcon from "@src/assets/images/icons/toolbox.svg";
+import speakerIcon from "@src/assets/images/icons/speaker.svg";
+import parachuteIcon from "@src/assets/images/icons/parachute.svg";
 
-const CardBrowserState = ({ colors, trackBgColor, heading, caption }) => {
-  const statesArr = [
+import { useEffect, useState } from "react";
+import { getBrowserStats } from "../../../../redux/salesGrowth";
+import { useDispatch, useSelector } from "react-redux";
+
+const CardBrowserState = ({ colors, trackBgColor, heading, caption, type }) => {
+  const dispatch = useDispatch();
+  const browserStats = useSelector((state) => state.salesGrowth.browserStats);
+  const [trans, setTrans] = useState([]);
+  const ICONS = {
+    chromeIcon: chromeIcon,
+    firefoxIcon: firefoxIcon,
+    IEIcon: IEIcon,
+    safariIcon: safariIcon,
+    operaIcons: operaIcons,
+  };
+  const formatBrowserStats = (browserStats) => {
+    return browserStats?.map((browserStat, index) => {
+      const updatedBrowserStat = {
+        avatar: ICONS[browserStat.avatar],
+        title: browserStat.title,
+        value: browserStat.value,
+        chart: {
+          type: "radialBar",
+          series: [parseInt(browserStat.value)],
+          height: 30,
+          width: 30,
+          options: {
+            grid: {
+              show: false,
+              padding: {
+                left: -15,
+                right: -15,
+                top: -12,
+                bottom: -15,
+              },
+            },
+            colors: [colors.primary.main],
+            plotOptions: {
+              radialBar: {
+                hollow: {
+                  size: "22%",
+                },
+                track: {
+                  background: trackBgColor,
+                },
+                dataLabels: {
+                  showOn: "always",
+                  name: {
+                    show: false,
+                  },
+                  value: {
+                    show: false,
+                  },
+                },
+              },
+            },
+            stroke: {
+              lineCap: "round",
+            },
+          },
+        },
+      };
+      return updatedBrowserStat;
+    });
+  };
+
+  useEffect(() => {
+    dispatch(getBrowserStats());
+  }, []);
+
+  useEffect(() => {
+    setTrans(formatBrowserStats(browserStats));
+    console.log({ browserStats });
+  }, [browserStats]);
+
+  const prods = [
     {
-      avatar: chromeIcon,
-      title: "Google Chrome",
+      avatar: starIcon,
+      title: "Star Shampoo",
       value: "54.4%",
       chart: {
         type: "radialBar",
@@ -70,8 +151,8 @@ const CardBrowserState = ({ colors, trackBgColor, heading, caption }) => {
       },
     },
     {
-      avatar: firefoxIcon,
-      title: "Mozila Firefox",
+      avatar: bookIcon,
+      title: "Books",
       value: "6.1%",
       chart: {
         type: "radialBar",
@@ -115,8 +196,8 @@ const CardBrowserState = ({ colors, trackBgColor, heading, caption }) => {
       },
     },
     {
-      avatar: safariIcon,
-      title: "Apple Safari",
+      avatar: rocketIcon,
+      title: "Rockets",
       value: "14.6%",
       chart: {
         type: "radialBar",
@@ -160,8 +241,8 @@ const CardBrowserState = ({ colors, trackBgColor, heading, caption }) => {
       },
     },
     {
-      avatar: IEIcon,
-      title: "Internet Explorer",
+      avatar: brushIcon,
+      title: "Brush",
       value: "4.2%",
       chart: {
         type: "radialBar",
@@ -205,8 +286,8 @@ const CardBrowserState = ({ colors, trackBgColor, heading, caption }) => {
       },
     },
     {
-      avatar: operaIcons,
-      title: "Opera Mini",
+      avatar: speakerIcon,
+      title: "Speakers",
       value: "8.4%",
       chart: {
         type: "radialBar",
@@ -252,31 +333,97 @@ const CardBrowserState = ({ colors, trackBgColor, heading, caption }) => {
   ];
 
   const renderStates = () => {
-    return statesArr.map((state) => {
-      return (
-        <div key={state.title} className="browser-states">
-          <div className="d-flex">
-            <img
-              className="rounded me-1"
-              src={state.avatar}
-              height="30"
-              alt={state.title}
-            />
-            <h6 className="align-self-center mb-0">{state.title}</h6>
+    if (type === "browser") {
+      return trans.map((state) => {
+        return (
+          <div key={state.title} className="browser-states">
+            <div className="d-flex">
+              <img
+                className="rounded me-1"
+                src={state.avatar}
+                height="30"
+                alt={state.title}
+              />
+              <h6 className="align-self-center mb-0">{state.title}</h6>
+            </div>
+            <div className="d-flex align-items-center">
+              <div className="fw-bold text-body-heading me-1">
+                {state.value}
+              </div>
+              <Chart
+                options={state.chart.options}
+                series={state.chart.series}
+                type={state.chart.type}
+                height={state.chart.height}
+                width={state.chart.width}
+              />
+            </div>
           </div>
-          <div className="d-flex align-items-center">
-            <div className="fw-bold text-body-heading me-1">{state.value}</div>
-            <Chart
-              options={state.chart.options}
-              series={state.chart.series}
-              type={state.chart.type}
-              height={state.chart.height}
-              width={state.chart.width}
-            />
-          </div>
-        </div>
-      );
-    });
+        );
+      });
+    } else if (type === "top products") {
+      return prods
+        .sort((a, b) => parseInt(b.value) - parseInt(a.value))
+        .map((state) => {
+          return (
+            <div key={state.title} className="browser-states">
+              <div className="d-flex">
+                <img
+                  className="rounded me-1"
+                  src={state.avatar}
+                  height="30"
+                  width="30"
+                  alt={state.title}
+                />
+                <h6 className="align-self-center mb-0">{state.title}</h6>
+              </div>
+              <div className="d-flex align-items-center">
+                <div className="fw-bold text-body-heading me-1">
+                  {state.value}
+                </div>
+                <Chart
+                  options={state.chart.options}
+                  series={state.chart.series}
+                  type={state.chart.type}
+                  height={state.chart.height}
+                  width={state.chart.width}
+                />
+              </div>
+            </div>
+          );
+        });
+    } else {
+      return prods
+        .sort((a, b) => parseInt(a.value) - parseInt(b.value))
+        .map((state) => {
+          return (
+            <div key={state.title} className="browser-states">
+              <div className="d-flex">
+                <img
+                  className="rounded me-1"
+                  src={state.avatar}
+                  height="30"
+                  width="30"
+                  alt={state.title}
+                />
+                <h6 className="align-self-center mb-0">{state.title}</h6>
+              </div>
+              <div className="d-flex align-items-center">
+                <div className="fw-bold text-body-heading me-1">
+                  {state.value}
+                </div>
+                <Chart
+                  options={state.chart.options}
+                  series={state.chart.series}
+                  type={state.chart.type}
+                  height={state.chart.height}
+                  width={state.chart.width}
+                />
+              </div>
+            </div>
+          );
+        });
+    }
   };
 
   return (
@@ -286,19 +433,6 @@ const CardBrowserState = ({ colors, trackBgColor, heading, caption }) => {
           <CardTitle tag="h4">{heading}</CardTitle>
           <CardText className="font-small-2">{caption}</CardText>
         </div>
-        <UncontrolledDropdown className="chart-dropdown">
-          <DropdownToggle
-            color=""
-            className="bg-transparent btn-sm border-0 p-50"
-          >
-            <MoreVertical size={18} className="cursor-pointer" />
-          </DropdownToggle>
-          <DropdownMenu end>
-            <DropdownItem className="w-100">Last 28 Days</DropdownItem>
-            <DropdownItem className="w-100">Last Month</DropdownItem>
-            <DropdownItem className="w-100">Last Year</DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
       </CardHeader>
       <CardBody>{renderStates()}</CardBody>
     </Card>

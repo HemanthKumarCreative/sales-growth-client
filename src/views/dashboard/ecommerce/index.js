@@ -71,6 +71,7 @@ const EcommerceDashboard = () => {
             trackBgColor={trackBgColor}
             heading="Most Sold Products"
             caption="Counter August 2020"
+            type="top products"
           />
         </Col>
         <Col lg="4" md="6" xs="12">
@@ -79,6 +80,7 @@ const EcommerceDashboard = () => {
             trackBgColor={trackBgColor}
             heading="Browser States"
             caption="Counter August 2020"
+            type="browser"
           />
         </Col>
         <Col lg="4" md="6" xs="12">
@@ -90,6 +92,7 @@ const EcommerceDashboard = () => {
             trackBgColor={trackBgColor}
             heading="Least Sold Products"
             caption="Counter August 2020"
+            type="bottom products"
           />
         </Col>
       </Row>
